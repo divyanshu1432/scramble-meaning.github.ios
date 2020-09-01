@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width = device-width initial-scale = 1.0">
+
+	<meta http-equiv="refresh" content="30">
+	<title> Meaning scramble game </title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+	<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap" rel="stylesheet">
+
+
+<style> 
+	*{
+		margin: 0; padding: 0; box-sizing: border-box;
+	}
+header{height: 15vh;
+	color: #fff;
+background-color: #474787;
+text-align: center;
+text-shadow: -9px -9px 15px rgba(150, 150, 150, 0.8);display: grid;place-items:center;
+font-family: 'Source Code Pro', monospace;
+letter-spacing: .2rem;
+font-weight: bolder;
+}
+
+section{
+
+	height: 70vh;
+	background-color: #B33771;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: -10px;
+}
+
+.gameArea{
+	background-color: #FD7272;
+	width: 30rem;
+	height: 20rem;
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+
+}
+
+.buton{
+	background-color: #333;
+
+color:#fff;
+}
+
+.buton:hover{
+	background-color: #BDC581 ;
+
+color:   #333;
+transition: all .3s;
+letter-spacing: .1rem;
+
+}
+.hide{
+	display: none;
+	height: 35px;
+	width: 25vw;
+	border:none;
+	border-radius: 20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+	 <h2>
+GUESS THE WORD AND ROCK
+</h2>
+</header>
+
+
+	<h4 style="color: #f6f6f6; background-color: #333; height: 10vh;  center; word-spacing: 10px;"> <div class="container">  WELCOME  <SPAN class="namee"> </SPAN> </div></h4>
+
+
+<section>
+
+<div class="gameArea">
+
+
+<h3 style="padding: 15px;" class="msg"> Guess the word !</h3>
+
+<div style="display: flex;justify-content: center;
+align-items: center; flex-direction: column;" class="start mt-5">
+
+<input type="text" class="hide" placeholder="Guess here">
+
+<button class="btn btn-lg mt-3 buton"> Click here to start </button>
+
+</div></div>
+
+</section>
+
+<footer style="height: 5vh; width: 100vw; background-color: #333; color: #f9f9f9">   <h5 style="display: grid;place-items :center;"> you have only 30 seconds </h5> </footer>
+<script> 
+
+let session = sessionStorage.getItem("name_user");
+
+document.querySelector('.namee').innerHTML =  session;
+
+
+
+const msg = document.querySelector(".msg");
+
+const guess = document.querySelector("input");
+
+const btn = document.querySelector("button");
+
+let newWord = "";
+let randWord = "";
+
+let words = ['correct' , 'good' , 'bad', 'forget' , 'excessive' , 'redundancy', 'cover', 'peacock', 'cluster' , 'ambush' , 'stubborn' , 'pit' , 'mug' , 'mouth' , 'wrist', 'toil' , 'blond' , 'entrance' , 'regret' , 'hustle' , 'spark' , 'cram', 'fate' , 'console' , 'drain' , 'hillarious' , 'ressesion' , 'riot' , 'sport' , 'install' , 'impatient' , 'lake' , 'estate' , 'famish' , 'orchard' , 'curiosity' , 'doom', 'doomed' , 'ensure', 'mango' , 'apple', 'grapes' , 'asylum' , 'glimpse','gaurd' , 'wisper' ,'rebuke' , 'praise' , 'firefly' , 'locust' , 'slave' , 'captive' , 'exlusive', 'snicker' ,'plague','shuffle' , 'superstition', 'retaliate' , 'aquaticks' , 'man' , 'women' , 'fade' , 'assure' , 'linger' , 'garden'  , 'fight' , 'scuffle' , 'spat' , 'drone' , 'angle' , 'dwell' , 'swallow', 'eat' , 'drink' , 'relevant' , 'rose' , 'lotus' , 'conspiracy' , 'influence' , 'enhance' , 'cops' , 'carve' , 'ommision' , 'fake' , 'exemption' , 'gladiator' , 'mundane', 'important' , 'cocky' , 'misdeed' , 'faith' , 'honour' , 'bag' , 'book' , 'legion' , 'lesion' , 'thirty' , 'five' , 'one'  , 'group' , 'constitution' , 'england' , 'india' , 'pakistan' , 'australia' , 'martyr' , 'help' , 'helpless' , 'chair' , 'table' , 'dive' , 'sapling' , 'folk' , 'yet' , 'let' , 'is' , 'was' , 'contribution', 'meeting' ,'online' , 'facebook' , 'instagram' , 'up' , 'down' , 'fictitious' , 'company' , 'kanpur' , 'india' , 'expell' , 'explain' , 'crumbs' , 'plead' , 'seek' , 'absolute' , 'relative' , 'position' , 'easy' , 'food' , 'squander' , 'conceal' , 'clip' , 'click' ,'nose' , 'keen']
+
+
+const createNewWoelds = () => {
+
+//console.log(words[0])
+
+let ranNum = Math.floor(Math.random() * words.length);
+//console.log(ranNum)
+
+let tempWord = words[ranNum]
+//console.log(tempWord.split(""))
+
+return tempWord;
+}
+
+
+const scramble = (arr) => {
+
+for(let i = arr.length-1; i>=0; i--){
+
+	temp = arr[i];
+	//console.log(temp);
+
+	let j =Math.floor(Math.random()*(i+1));
+	//console.log(i);
+	//console.log(j)
+
+	arr[i] = arr[j];
+	arr[j] = temp;
+}
+
+return arr;
+}
+
+
+
+
+let play = false;
+
+btn.addEventListener('click' ,  function(){
+
+if(!play){
+
+guess.setAttribute("style", 'height: 35px;width: 35vw;border:none;border-radius: 20px;outline:none; text-align:center;')
+
+   play = true;
+	btn.innerHTML = 'Guess word';
+	guess.classList.toggle('hide');
+	 newWord = createNewWoelds();
+	randWord = scramble(newWord.split("")).join('');
+//console.log(newWord)
+
+//console.log(newWord)
+	msg.innerHTML = `Guess this word ${randWord}`;
+}
+
+else{
+
+if(guess.value.toLowerCase() === newWord){
+	play = false;
+document.querySelector(".msg").innerHTML = `Good ${session} it was ${newWord}`;
+
+btn.innerHTML = 'start again'
+guess.classList.toggle('hide');
+guess.value = '';
+
+
+}else{play = false;
+		document.querySelector(".msg").innerHTML = `oh ${session} it was <b> ${newWord}</b> try again` ;
+btn.innerHTML = 'start again'
+guess.classList.toggle('hide');
+guess.value = '';
+}}})
+
+</script>
+
+
+</body>
+</html>
